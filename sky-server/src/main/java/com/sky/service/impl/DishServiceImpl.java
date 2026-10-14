@@ -184,10 +184,13 @@ public class DishServiceImpl implements DishService {
      * @return
      */
     public List<DishVO> listWithFlavor(Dish dish) {
+        //根据条件查询菜品
         List<Dish> dishList = dishMapper.list(dish);
 
+        //创建VO对象的集合
         List<DishVO> dishVOList = new ArrayList<>();
 
+        //遍历菜品列表
         for (Dish d : dishList) {
             DishVO dishVO = new DishVO();
             BeanUtils.copyProperties(d,dishVO);
@@ -195,7 +198,9 @@ public class DishServiceImpl implements DishService {
             //根据菜品id查询对应的口味
             List<DishFlavor> flavors = dishFlavorMapper.getByDishId(d.getId());
 
+            //将口味设置到VO中
             dishVO.setFlavors(flavors);
+            //将VO添加到列表
             dishVOList.add(dishVO);
         }
 
